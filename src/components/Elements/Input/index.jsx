@@ -7,7 +7,7 @@ const InputForm = (props) => {
         <div className="mt-4">
             <Label htmlFor={name}>{label}</Label>
             <div className="mt-1 mb-4">
-                <Input type={type} name={name} placeholder={placeholder}/>
+                <Input type={type} name={name} placeholder={placeholder} id={name}/>
             </div>
         </div>)
 
