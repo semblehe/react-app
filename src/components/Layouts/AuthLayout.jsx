@@ -18,11 +18,7 @@ const AuthLayout = (props) => {
                     {type==='register' && (
                         <Link to="/login" className="font-bold text-blue">Login</Link>
                     )}
-
-
                 </p>
-
-                {/*<p className="text-sm"><Link to="/register" className="font-bold text-blue">Daftar Akun?</Link></p>*/}
             </div>
         </div>
     )
