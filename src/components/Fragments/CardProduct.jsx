@@ -4,7 +4,7 @@ import ButtonFunc from "../Elements/Button/index.jsx";
 const CardProduct = (props) => {
    const {children} = props
     return (
-        <div className="w-full max-w-sm bg-black-800 border border-grey-799 rounded-lg shadow mx-2 flex flex-col justify-between">
+        <div className="w-full max-w-xs bg-black-800 border border-grey-799 rounded-lg shadow mx-5 my-2 flex flex-col justify-between">
             {children}
         </div>
     )
@@ -34,11 +34,11 @@ const Body = (props) => {
 }
 
 const Footer = (props) => {
-    const {price} = props
+    const {price,handleAddToCart,id} = props
     return (
         <div className="flex items-center justify-between pb-5 px-5">
-            <span className="text-xl font-bold text-black">{price}</span>
-            <ButtonFunc title="Add to cart" classname="bg-black" textcolor="white"> Add to cart </ButtonFunc>
+            <span className="text-xl font-bold text-black">Rp {price.toLocaleString('id-ID',{styles:'currency',currency:'IDR'})}</span>
+            <ButtonFunc title="Add to cart" classname="bg-black" textcolor="white" onClick={ () => handleAddToCart(id)}> Add to cart </ButtonFunc>
         </div>
     )
 }
