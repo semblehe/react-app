@@ -1,5 +1,6 @@
 import InputForm from "../Elements/Input/index.jsx";
 import ButtonFunc from "../Elements/Button/index.jsx";
+import {useEffect, useRef} from "react";
 
 const FormLogin = () => {
     const handleLogin = (e) => {
@@ -8,10 +9,16 @@ const FormLogin = () => {
         localStorage.setItem("password",e.target.password.value)
         window.location.href="/products"
     }
+
+    const username = useRef(null)
+
+    useEffect(() => {
+        username.current.focus();
+    }, []);
     return (
         <>
         <form onSubmit={handleLogin}  className="mb-8">
-            <InputForm label="Username" name="username" type="text" placeholder="Username"/>
+            <InputForm label="Username" name="username" type="text" placeholder="Username" ref={username}/>
             <InputForm label="Password" name="password" type="password" placeholder="*****"/>
             <ButtonFunc textcolor="white" classname="w-full bg-blue-500" type="submit">Login</ButtonFunc>
         </form>

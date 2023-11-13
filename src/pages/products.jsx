@@ -2,28 +2,9 @@ import CardProduct from "../components/Fragments/CardProduct.jsx";
 import ButtonFunc from "../components/Elements/Button/index.jsx";
 // import Counter from "../components/Fragments/Counter.jsx";
 import {useEffect, useRef, useState} from "react";
+import {getProducts} from "../services/product.service.js";
 
-const products = [
-    {
-        id: 1,
-        title: "Sepatu",
-        price: 1000000,
-        image: "/images/shoes-1.jpg",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }, {
-        id: 2,
-        title: "Sepatu Baru",
-        price: 700000,
-        image: "/images/shoes-1.jpg",
-        description: "consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }, {
-        id: 3,
-        title: "Sepatu Busuk",
-        price: 900000,
-        image: "/images/shoes-1.jpg",
-        description: "consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }
-]
+
 
 const username = localStorage.getItem('username')
 const ProductsPage = () => {
@@ -32,11 +13,19 @@ const ProductsPage = () => {
 
     const [total,setTotal] = useState(0);
 
+    const [products,setProduct]= useState([]);
+
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || [])
     },[])
+
     useEffect(() => {
-        if(cart.length > 0) {
+        getProducts((data) => {
+            setProduct(data)
+        })
+    },[])
+    useEffect(() => {
+        if(products.length > 0 && cart.length > 0) {
             let total = 0
             cart.forEach((item) => {
                 const product = products.find((product) => product.id === item.id)
@@ -55,6 +44,15 @@ const ProductsPage = () => {
         localStorage.setItem('cart', JSON.stringify(cartRef.current))
     }
 
+    const totalPriceref = useRef(null) // useRed
+
+    useEffect(() =>{
+        if(cart.length > 0) {
+            totalPriceref.current.style.display="table-row";
+        }else{
+            totalPriceref.current.style.display="none";
+        }
+    },[cart])
     const handleLogout = () => {
         console.log("test")
         localStorage.clear()
@@ -79,7 +77,7 @@ const ProductsPage = () => {
             </div>
             <div className="flex justify-center py-5">
                 <div className="w-4/6 flex flex-wrap">
-                    {products.map((products) => (
+                    {products.length > 0 && products.map((products) => (
                         <CardProduct key={products.id}>
                             <CardProduct.Header image={products.image}/>
                             <CardProduct.Body title={products.title}> {products.description} </CardProduct.Body>
@@ -97,8 +95,8 @@ const ProductsPage = () => {
                         <th>Total</th>
                         </thead>
                         <tbody>
-                        {cartRef.current.map((item) => {
-                        // {cart.map((item) => {
+                        {/*{cartRef.current.map((item) => {*/}
+                         {products.length > 0 && cart.map((item) => {
                                 const product = products.find((product) => product.id === item.id)
                                 return (
                                     <tr key={item.id}>
@@ -110,7 +108,7 @@ const ProductsPage = () => {
                                 )
                         }
                         )}
-                        <tr>
+                        <tr ref={totalPriceref}>
                             <td colSpan={3} className="text-bold">Total Price</td>
                             <td className="text-bold">Rp {(total).toLocaleString('id-ID',{styles:'currency',currency:'IDR'})}
 
