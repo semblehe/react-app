@@ -34,7 +34,7 @@ const ProductsPage = () => {
             setTotal(total)
             localStorage.setItem('cart', JSON.stringify(cart))
         }
-    },[cart])
+    },[cart,products])
 
     const cartRef = useRef(JSON.parse(localStorage.getItem('cart')) || [])
 
@@ -109,8 +109,8 @@ const ProductsPage = () => {
                         }
                         )}
                         <tr ref={totalPriceref}>
-                            <td colSpan={3} className="text-bold">Total Price</td>
-                            <td className="text-bold">Rp {(total).toLocaleString('id-ID',{styles:'currency',currency:'IDR'})}
+                            <td colSpan={3} className="font-bold">Total Price</td>
+                            <td className="font-bold">Rp {(total).toLocaleString('id-ID',{styles:'currency',currency:'IDR'})}
 
                             </td>
                         </tr>
