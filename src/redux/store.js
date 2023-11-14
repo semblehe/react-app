@@ -1,13 +1,14 @@
 
 import {configureStore} from "@reduxjs/toolkit";
-import cardReducer from "./slices/cardSlice";
+import cardReducer from "./slices/cartSlice";
 
 const store = configureStore({
     reducer : {
-        card : cardReducer
+        cart : cardReducer
     }
 })
-
-store.subscribe("store changed :",store.getState())
-
+console.log("on create store",store.getState());
+store.subscribe(() => {
+    console.log("test",store.getState())
+})
 export default store
