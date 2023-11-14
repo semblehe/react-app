@@ -3,10 +3,12 @@ import ButtonFunc from "../components/Elements/Button/index.jsx";
 // import Counter from "../components/Fragments/Counter.jsx";
 import {useEffect, useRef, useState} from "react";
 import {getProducts} from "../services/product.service.js";
+import {getUsername} from "../services/auth.service.js";
+import {useLogin} from "../hooks/useLogin.jsx";
 
 
 
-const username = localStorage.getItem('username')
+const token = localStorage.getItem('token')
 const ProductsPage = () => {
 
     const [cart,setCart] = useState([]);
@@ -14,6 +16,7 @@ const ProductsPage = () => {
     const [total,setTotal] = useState(0);
 
     const [products,setProduct]= useState([]);
+    const username = useLogin()
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || [])
@@ -54,8 +57,7 @@ const ProductsPage = () => {
         }
     },[cart])
     const handleLogout = () => {
-        console.log("test")
-        localStorage.clear()
+        localStorage.removeItem('token')
         window.location.href = "/login"
     }
 
@@ -77,11 +79,11 @@ const ProductsPage = () => {
             </div>
             <div className="flex justify-center py-5">
                 <div className="w-4/6 flex flex-wrap">
-                    {products.length > 0 && products.map((products) => (
-                        <CardProduct key={products.id}>
-                            <CardProduct.Header image={products.image}/>
-                            <CardProduct.Body title={products.title}> {products.description} </CardProduct.Body>
-                            <CardProduct.Footer price={products.price} id={products.id} handleAddToCart={handleAddToCart}/>
+                    {products.length > 0 && products.map((product) => (
+                        <CardProduct key={product.id}>
+                            <CardProduct.Header image={product.image} id={product.id}/>
+                            <CardProduct.Body title={product.title}> {product.description} </CardProduct.Body>
+                            <CardProduct.Footer price={product.price} id={product.id} handleAddToCart={handleAddToCart}/>
                         </CardProduct>
                     ))}
                 </div>
