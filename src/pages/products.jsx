@@ -1,18 +1,19 @@
 import CardProduct from "../components/Fragments/CardProduct.jsx";
 import ButtonFunc from "../components/Elements/Button/index.jsx";
 // import Counter from "../components/Fragments/Counter.jsx";
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {getProducts} from "../services/product.service.js";
 // import {getUsername} from "../services/auth.service.js";
 import {useLogin} from "../hooks/useLogin.jsx";
 import TableCart from "../components/Fragments/TableCart.jsx";
 import Navbar from "../components/Layouts/Navbar.jsx";
+import {DarkMode} from "../context/DarkMode.jsx";
 
 
 
 const token = localStorage.getItem('token')
 const ProductsPage = () => {
-
+    const {isDarkMode} = useContext(DarkMode);
     // const [cart,setCart] = useState([]);
 
     // const [total,setTotal] = useState(0);
@@ -72,7 +73,7 @@ const ProductsPage = () => {
     return (
         <>
              <Navbar/>
-            <div className="flex justify-center py-5">
+            <div className={`flex justify-center ${isDarkMode && 'bg-slate-900'}`}>
                 <div className="w-4/6 flex flex-wrap">
                     {products.length > 0 && products.map((product) => (
                         <CardProduct key={product.id}>
