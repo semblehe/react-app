@@ -3,6 +3,7 @@ import ButtonFunc from "../Elements/Button/index.jsx";
 import {useContext, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {DarkMode} from "../../context/DarkMode.jsx";
+import {useTotalPrice} from "../../context/TotalPriceContext.jsx";
 
 const Navbar = () => {
     const username = useLogin();
@@ -10,6 +11,8 @@ const Navbar = () => {
     const cart = useSelector((state) => state.cart.data)
 
     const {isDarkMode,setIsDarkMode} = useContext(DarkMode);
+
+    const {total} =useTotalPrice();
 
     useEffect(() => {
         if (cart.length > 0) {
@@ -28,8 +31,7 @@ const Navbar = () => {
         <div className="flex justify-end h-20 bg-blue-600 text-white items-center px-10">
             {username}
             <ButtonFunc classname="bg-black mx-2" textcolor="white" onClick={handleLogout} type="button">Logout</ButtonFunc>
-            <div className="flex items-center bg-gray-800 p-2 rounded-md ml-5">{totalCart}</div>
-
+            <div className="flex items-center bg-gray-800 p-2 rounded-md ml-5 mr-5">item : {totalCart} | price : ${total}</div>
             <ButtonFunc className="bg-black px-10 mx-5" onClick={() => setIsDarkMode(!isDarkMode)}>{isDarkMode?"Light":"Dark"}</ButtonFunc>
         </div>
 

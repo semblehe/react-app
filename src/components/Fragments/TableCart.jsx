@@ -1,12 +1,16 @@
 import {useSelector} from "react-redux";
 import {useContext, useEffect, useRef, useState} from "react";
 import {DarkMode} from "../../context/DarkMode.jsx";
+import {useTotalPrice, useTotalPriceDispatch} from "../../context/TotalPriceContext.jsx";
 
 const tableCart = (props) => {
     const {products} = props;
     // console.log(state.cart.data)
     const cart = useSelector((state) =>  state.cart.data)
-    const [total,setTotal] = useState(0)
+    // const [total,setTotal] = useState(0)
+
+    const dispatch = useTotalPriceDispatch();
+    const {total} = useTotalPrice();
 
     useEffect(() => {
         if(products.length > 0 && cart.length > 0) {
@@ -15,7 +19,8 @@ const tableCart = (props) => {
                 const product = products.find((product) => product.id === item.id)
                 total += product.price * item.qty
             })
-            setTotal(total)
+            // setTotal(total)
+            dispatch({type:"UPDATE",payload:{total:total}})
             localStorage.setItem('cart', JSON.stringify(cart))
         }
     },[cart,products])
@@ -56,7 +61,7 @@ const tableCart = (props) => {
             )}
             <tr ref={totalPriceref}>
                 <td colSpan={3} className="font-bold">Total Price</td>
-                <td className="font-bold">Rp {(total).toLocaleString('id-ID',{styles:'currency',currency:'IDR'})}
+                <td className="font-bold">Rp {total.toLocaleString('id-ID',{styles:'currency',currency:'IDR'})}
 
                 </td>
             </tr>
