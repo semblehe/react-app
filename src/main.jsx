@@ -14,12 +14,18 @@ import store from "./redux/store";
 import DarkModeContextProvider from "./context/DarkMode.jsx";
 import {TotalPriceProvider} from "./context/TotalPriceContext.jsx";
 import SitePage from "./pages/site.jsx";
+import RadioPage from "./pages/radio.jsx";
+import PlayerPage from "./pages/playerlist.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <SitePage/>,
         errorElement: <ErrorPage/>
+    },
+    {
+        path: "/radio",
+        element: <RadioPage/>
     },
     {
         path: "/login",
@@ -40,6 +46,10 @@ const router = createBrowserRouter([
     {
         path: "/product/:id",
         element: <DetailProductPage/>
+    },
+    {
+        path: "/player/:id",
+        element: <PlayerPage/>
     }
 ])
 
